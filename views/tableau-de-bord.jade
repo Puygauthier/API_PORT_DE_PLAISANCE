@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  h1 Tableau de Bord
+  p Bienvenue dans votre espace personnel.
+  
+  if user
+    p Utilisateur connecté : #{user.nom} (#{user.email})
+  if dateDuJour
+    p Date du jour : #{dateDuJour}
+
+  if reservationsEnCours && reservationsEnCours.length
+    table
+      thead
+        tr
+          th ID Réservation
+          th Date début
+          th Date fin
+          th Bateau
+      tbody
+        each reservation in reservationsEnCours
+          tr
+            td= reservation._id || reservation.id || 'N/A'
+            td= reservation.dateDebut
+            td= reservation.dateFin
+            td= reservation.bateau
+  else
+    p Aucune réservation en cours.
+
+  a(href="/") ← Retour à l'accueil

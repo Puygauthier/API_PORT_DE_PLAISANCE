@@ -5,7 +5,6 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('api-port-de-plaisance:server');
 var http = require('http');
 
 /**
@@ -37,13 +36,11 @@ function normalizePort(val) {
   var port = parseInt(val, 10);
 
   if (isNaN(port)) {
-    // named pipe
-    return val;
+    return val; // named pipe
   }
 
   if (port >= 0) {
-    // port number
-    return port;
+    return port; // port number
   }
 
   return false;
@@ -62,7 +59,6 @@ function onError(error) {
     ? 'Pipe ' + port
     : 'Port ' + port;
 
-  // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
       console.error(bind + ' requires elevated privileges');
@@ -86,5 +82,5 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  console.log('✅ Serveur démarré sur le ' + bind);
 }

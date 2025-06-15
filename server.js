@@ -1,49 +1,69 @@
+const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const session = require('express-session');
+const methodOverride = require('method-override');
+const mongoose = require('mongoose');
+
 const app = express();
 const PORT = 3000;
 
-// Middleware pour journaliser les requêtes
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.url}`);
-  next();
-});
+// Connexion MongoDB Atlas
+mongoose.connect('mongodb+srv://puygauthiernathalie:9fsBkQv99KO6GC6b@cluster0.emvgewi.mongodb.net/port?retryWrites=true&w=majority')
+  .then(() => console.log('✅ Connexion MongoDB réussie'))
+  .catch(err => console.error('❌ Erreur MongoDB :', err));
 
-// Middleware pour analyser les formulaires
-app.use(express.urlencoded({ extended: true }));
+// Middleware
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(methodOverride('_method'));
 
-// Servir les fichiers statiques depuis /public
+app.use(session({
+  secret: 'tonSecretIciChangeMoi',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 3600000 },
+}));
+
+// Moteur de vues Jade
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+
+// Fichiers statiques
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Route de documentation (simple HTML statique)
-app.get('/docs', (req, res) => {
-  res.send(`
-    <h2>📚 Documentation de l'API</h2>
-    <ul>
-      <li>GET /api/catways</li>
-      <li>GET /api/reservations</li>
-    </ul>
-    <a href="/">⬅ Retour à l'accueil</a>
-  `);
-});
+// Import des routes
+const indexRouter = require('./routes/index');                   // dans routes/
+const usersRouter = require('./routes/users');                   // dans routes/
+const catwaysRouter = require('./routes/routes/catways');        // dans routes/routes/
+const reservationsRouter = require('./routes/routes/reservations'); // dans routes/routes/
+const apiRoutes = require('./routes/routes/api');                // dans routes/routes/
 
-// Traitement de la connexion (exemple simple)
-app.post('/login', (req, res) => {
-  const { username, password } = req.body;
-
-  // ⚠️ À remplacer par une vraie authentification plus tard
-  if (username === 'admin' && password === '1234') {
-    res.redirect('/tableau-de-bord.html');
-  } else {
-    res.send('❌ Échec de la connexion. <a href="/">Retour</a>');
-  }
-});
-
-// Routes API (MongoDB)
-const apiRoutes = require('./routes/routes/api');
+// Utilisation des routes
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+app.use('/catways', catwaysRouter);
+app.use('/reservations', reservationsRouter);
 app.use('/api', apiRoutes);
 
-// Démarrage du serveur
+// Erreur 404
+app.use((req, res, next) => {
+  next(createError(404));
+});
+
+// Erreurs globales
+app.use((err, req, res, next) => {
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.status(err.status || 500);
+  res.render('error');
+});
+
+// Lancement du serveur
 app.listen(PORT, () => {
   console.log(`🚀 Serveur démarré sur http://localhost:${PORT}`);
 });

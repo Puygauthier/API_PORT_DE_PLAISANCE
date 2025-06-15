@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+  h1 Détail de la réservation
+
+  p
+    strong Client :
+    |  #{reservation.client}
+
+  p
+    strong Du :
+    |  #{reservation.dateDebut.toLocaleDateString('fr-FR')}
+
+  p
+    strong Au :
+    |  #{reservation.dateFin.toLocaleDateString('fr-FR')}
+
+  a(href=`/catways/${reservation.catway}/reservations`) ← Retour

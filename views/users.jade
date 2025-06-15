@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  h1 Gestion des utilisateurs
+
+  if users.length
+    table
+      thead
+        tr
+          th Email
+          th Actions
+      tbody
+        each user in users
+          tr
+            td #{user.email}
+            td
+              a(href=`/users/${user.email}`) Détails
+              form(method="POST", action=`/users/${user.email}?_method=DELETE`, style="display:inline; margin-left:10px;")
+                button(type="submit") Supprimer
+ 
+   h2 Ajouter un utilisateur
+  form(method="POST", action="/users")
+    label(for="email") Email :
+    input(type="email", name="email", required)
+    br
+    label(for="password") Mot de passe :
+    input(type="password", name="password", required)
+    br
+    button(type="submit") Créer
+
+ 

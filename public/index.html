@@ -7,22 +7,20 @@
   <link rel="stylesheet" href="/index.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>Bienvenue sur l'API du Port de Plaisance</h1>
+  <div class="main">
+    <div class="container">
+      <h1>Bienvenue sur l'API du Port de Plaisance</h1>
+      <p>Ici, vous pouvez consulter les catways disponibles, faire des réservations et communiquer avec l'API du port.</p>
 
-    <p>Cette application permet de consulter les catways disponibles, les réservations et d'interagir avec l'API du port.</p>
+      <form action="/login" method="POST">
+        <input type="text" id="username" name="username" placeholder="Nom d'utilisateur" required />
+        <input type="text" id="email" name="email" placeholder="Adresse email" required />
+        <input type="password" id="password" name="password" placeholder="Mot de passe" required />
+        <button type="submit">Connexion</button>
+      </form>
 
-    <form action="/login" method="POST">
-      <label for="username">Nom d'utilisateur :</label>
-      <input type="text" id="username" name="username" required />
-
-      <label for="password">Mot de passe :</label>
-      <input type="password" id="password" name="password" required />
-
-      <button type="submit">Connexion</button>
-    </form>
-
-    <a href="/docs">Accéder à la documentation de l'API</a>
+      <a href="/docs">Accéder à la documentation de l'API</a>
+    </div>
   </div>
 </body>
 </html>

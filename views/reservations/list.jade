@@ -1,0 +1,37 @@
+extends ../layout
+
+block content
+  h1 Réservations du Catway #{catwayId}
+
+  // Formulaire pour changer de catway (recherche par numéro)
+  form(action='/catways/search', method='GET', style='margin: 20px 0;')
+    div
+      label(for='catwayId') Numéro de catway :
+      input(type='text', name='catwayId', id='catwayId', placeholder='Entrez un numéro de catway', required)
+      button(type='submit') Chercher
+
+  a(href='/catways/' + catwayId + '/reservations/new', style='display:inline-block; margin-bottom: 20px;') Ajouter une réservation
+
+  if reservations.length
+    table(style='width: 100%; border-collapse: collapse;')
+      thead
+        tr
+          th(style='padding: 8px; border-bottom: 1px solid #ccc;') Client
+          th(style='padding: 8px; border-bottom: 1px solid #ccc;') Début
+          th(style='padding: 8px; border-bottom: 1px solid #ccc;') Fin
+          th(style='padding: 8px; border-bottom: 1px solid #ccc;') Actions
+      tbody
+        each r in reservations
+          tr
+            td(style='padding: 8px; border-bottom: 1px solid #eee;')= r.nomClient
+            td(style='padding: 8px; border-bottom: 1px solid #eee;')= r.dateDebut.toLocaleDateString('fr-FR')
+            td(style='padding: 8px; border-bottom: 1px solid #eee;')= r.dateFin.toLocaleDateString('fr-FR')
+            td(style='padding: 8px; border-bottom: 1px solid #eee;')
+              a(href='/catways/' + catwayId + '/reservations/' + r._id) Voir
+              |  
+              a(href='/catways/' + catwayId + '/reservations/' + r._id + '/edit') Modifier
+              |  
+              form(method='POST', action='/catways/' + catwayId + '/reservations/' + r._id + '/delete', style='display:inline')
+                button(type='submit') Supprimer
+  else
+    p.message-info Aucune réservation enregistrée.

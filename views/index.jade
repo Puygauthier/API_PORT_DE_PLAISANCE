@@ -2,8 +2,48 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  if error
+    p(style="color:red") #{error}
 
+  form(method="POST", action="/login")
+    div
+      label(for="email") Email :
+      input(type="email", name="email", id="email", required)
+    div
+      label(for="password") Mot de passe :
+      input(type="password", name="password", id="password", required)
+    div
+      button(type="submit") Se connecter
 
+  p
+    | Pas encore de compte ? Contactez l'administrateur.
 
+extends ../layout
+
+block content
+  h1 Réservations du Catway #{catwayId}
+  a(href=`/catways/${catwayId}/reservations/new`) Nouvelle réservation
+  if reservations.length
+    table
+      thead
+        tr
+          th Client
+          th Début
+          th Fin
+          th Actions
+      tbody
+        each resa in reservations
+          tr
+            td= resa.nomClient
+            td= resa.dateDebut.toDateString()
+            td= resa.dateFin.toDateString()
+            td
+              a(href=`/catways/${catwayId}/reservations/${resa._id}`) Détails
+              | | 
+              a(href=`/catways/${catwayId}/reservations/${resa._id}/edit`) Modifier
+              | | 
+              form(method="POST", action=`/catways/${catwayId}/reservations/${resa._id}/delete`, style="display:inline")
+                button(type="submit") Supprimer
+  else
+    p.message-info Aucune réservation enregistrée.
 

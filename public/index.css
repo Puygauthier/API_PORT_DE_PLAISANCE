@@ -28,18 +28,18 @@ body::before {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background:transparent;
   z-index: -1;
 }
 
 /* Boîte contenant le formulaire */
 .container {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.3);
   padding: 30px;
   border-radius: 10px;
   max-width: 500px;
   width: 90%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   text-align: center;
 }
 
@@ -54,24 +54,39 @@ form {
   margin-top: 20px;
 }
 
-label {
-  text-align: left;
+input::placeholder {
+  color: #0077cc; /* bleu, même couleur que ton bouton */
+  opacity: 1; /* pour que ce soit bien visible */
 }
+
+
 
 input[type="text"],
 input[type="password"] {
   padding: 10px;
   border-radius: 5px;
   border: none;
+  margin-bottom: 10px;
+  font-size: 16px;
 }
+
+
+
+
+
+
 
 button {
   padding: 10px;
+  width: 30%;
   background-color: #0077cc;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+
+   display: block;       /* force le bouton à se comporter comme un bloc */
+  margin: 20px auto 0;  /* centre horizontalement */
 }
 
 button:hover {
@@ -87,4 +102,44 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+
+
+nav.menu {
+  background-color: #0077cc;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+nav.menu ul {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  padding: 0;
+  margin: 0;
+}
+
+nav.menu ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav.menu ul li a:hover {
+  text-decoration: underline;
+}
+.container {
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 800px;
+  width: 90%;
+  margin: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+  text-align: center;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
 }

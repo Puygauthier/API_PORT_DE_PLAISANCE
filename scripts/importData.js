@@ -17,11 +17,15 @@ async function run() {
     await client.connect();
     const db = client.db("API_PORT_DE_PLAISANCE");
 
-    // Charger les données JSON depuis /donnees/
-    const catwaysData = JSON.parse(fs.readFileSync(path.join(__dirname, 'donnees', 'catways.json'), 'utf8'));
-    const reservationsData = JSON.parse(fs.readFileSync(path.join(__dirname, 'donnees', 'reservations.json'), 'utf8'));
+    // Charger les données JSON depuis /data/
+    const catwaysData = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'catways.json'), 'utf8'));
+    const reservationsData = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'reservations.json'), 'utf8'));
 
-    // Insérer les données
+    // Supprimer les anciennes données
+    await db.collection('catways').deleteMany({});
+    await db.collection('reservations').deleteMany({});
+
+    // Insérer les nouvelles données
     const catwaysResult = await db.collection('catways').insertMany(catwaysData);
     const reservationsResult = await db.collection('reservations').insertMany(reservationsData);
 

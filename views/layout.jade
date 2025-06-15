@@ -3,6 +3,19 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
-    
   body
-    block content
+    // Le fond d’écran et le voile sombre sont gérés dans le CSS avec body::before
+    // Pas besoin d'un <div class="overlay">
+
+    // Container principal centré, commun à toutes les pages
+    div.container
+      // Barre de navigation
+      nav.menu
+        ul
+          li: a(href='/') Accueil
+          li: a(href='/catways') Catways
+          li: a(href='/users') Utilisateurs
+
+      // Contenu injecté par chaque page
+      block content
+

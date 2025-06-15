@@ -1,18 +1,197 @@
-body {
+/* Base générale */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: url('/images/port.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* Suppression du voile global sur le body */
+body::before {
+  display: none;
+}
+
+/* Conteneur principal avec voile interne et dimensions fixes */
+.container {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.2); /* voile sombre interne */
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 90%;
+  margin: 20px auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+  text-align: center;
+  box-sizing: border-box;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Voile sombre interne via pseudo-élément */
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  z-index: -1;
+}
+
+/* NAVIGATION */
+nav.menu {
+  background-color: #0077cc;
+  padding: 12px 0;
+  margin: -30px -30px 25px -30px;
+  width: calc(100% + 60px);
+  box-sizing: border-box;
+  border-radius: 10px 10px 0 0;
+}
+
+nav.menu ul {
+  list-style: none;
   padding: 0;
   margin: 0;
-  height: 100vh;
-  background-image: url("/images/port.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
+nav.menu a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  transition: color 0.2s ease;
+}
+
+nav.menu a:hover {
+  text-decoration: underline;
+  color: #66ccff;
+}
+
+/* TITRES */
+h1 {
+  margin-bottom: 20px;
+}
+
+/* FORMULAIRE */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+  align-items: center;
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="date"] {
+  width: 80%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+  color: #0077cc;
+  font-weight: bold;
+}
+
+form input::placeholder {
+  color: #0077cc;
+  opacity: 1;
+}
+
+/* BOUTONS */
+button {
+  padding: 10px 20px;
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: #005fa3;
+}
+
+/* TABLEAU */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: left;
+}
+
+th {
+  background-color: rgba(0, 119, 204, 0.8);
+  font-weight: 600;
+}
+
+tbody tr:hover {
+  background-color: rgba(0, 119, 204, 0.3);
+}
+
+/* LIENS */
 a {
-  color: #00B7FF;
+  color: #add8e6;
+  text-decoration: none;
 }
 
+a:hover {
+  text-decoration: underline;
+}
 
+/* MESSAGES */
+.message-info {
+  color: #add8e6;
+  font-weight: bold;
+  margin-top: 20px;
+}
 
+/* Liens comme boutons */
+a.button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  background-color: #0077cc;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
 
+a.button:hover {
+  background-color: #005fa3;
+}
 
+/* Boutons dans tableau réservations */
+table.table td form button {
+  background-color: #cc3300;
+  padding: 5px 10px;
+  font-weight: bold;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+table.table td form button:hover {
+  background-color: #a02a00;
+}

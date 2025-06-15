@@ -1,0 +1,57 @@
+extends layout
+
+block content
+  h1 Gestion des Catways
+
+  if error
+    p(style="color:#ff6666;") #{error}
+  if success
+    p(style="color:#66ff66;") #{success}
+
+  // Boutons d’action
+  div(style="margin-bottom: 20px;")
+    button(type="button", onclick="toggleSection('list')") 📄 Liste des catways
+
+  // Formulaire de création (masqué au départ si besoin)
+  div#createSection
+    form(method="POST", action="/catways")
+      input(type="text", name="numero", placeholder="Numéro unique", required)
+      input(type="text", name="catwayType", placeholder='Type ("long" ou "short")', required)
+      input(type="text", name="catwayState", placeholder="État de la passerelle", required)
+      button(type="submit") Ajouter Catway
+
+  // Liste des catways
+  div#listSection(style="margin-top: 30px; display:none;")
+    if catways && catways.length > 0
+      table(style="width: 100%; text-align: left; border-collapse: collapse;")
+        thead
+          tr
+            th(style="padding: 8px; border-bottom: 1px solid #ddd;") Numéro
+            th(style="padding: 8px; border-bottom: 1px solid #ddd;") Type
+            th(style="padding: 8px; border-bottom: 1px solid #ddd;") État
+            th(style="padding: 8px; border-bottom: 1px solid #ddd;") Actions
+        tbody
+          each catway in catways
+            tr
+              td(style="padding: 8px; border-bottom: 1px solid #eee;") #{catway.numero}
+              td(style="padding: 8px; border-bottom: 1px solid #eee;") #{catway.catwayType}
+              td(style="padding: 8px; border-bottom: 1px solid #eee;") #{catway.catwayState}
+              td(style="padding: 8px; border-bottom: 1px solid #eee;")
+                a(href=`/catways/${catway._id}`)  Détail
+                form(method="POST", action=`/catways/${catway._id}?_method=DELETE`, style="display:inline")
+                  button(type="submit", style="color:white; margin-left: 8px;")  Supprimer
+    else
+      p.message-info Aucune passerelle enregistrée.
+
+  script.
+    function toggleSection(section) {
+      const create = document.getElementById('createSection');
+      const list = document.getElementById('listSection');
+      if (section === 'create') {
+        create.style.display = 'block';
+        list.style.display = 'none';
+      } else if (section === 'list') {
+        create.style.display = 'none';
+        list.style.display = 'block';
+      }
+    }
