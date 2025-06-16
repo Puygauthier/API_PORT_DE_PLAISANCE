@@ -12,7 +12,7 @@ block content
   div(style="margin-bottom: 20px;")
     button(type="button", onclick="toggleSection('list')") 📄 Liste des catways
 
-  // Formulaire de création (masqué au départ si besoin)
+  // Formulaire de création
   div#createSection
     form(method="POST", action="/catways")
       input(type="text", name="numero", placeholder="Numéro unique", required)
@@ -21,7 +21,7 @@ block content
       button(type="submit") Ajouter Catway
 
   // Liste des catways
-  div#listSection(style="margin-top: 30px; display:none;")
+  div#listSection(style="margin-top: 80px; display: none;")
     if catways && catways.length > 0
       table(style="width: 100%; text-align: left; border-collapse: collapse;")
         thead
@@ -37,9 +37,9 @@ block content
               td(style="padding: 8px; border-bottom: 1px solid #eee;") #{catway.catwayType}
               td(style="padding: 8px; border-bottom: 1px solid #eee;") #{catway.catwayState}
               td(style="padding: 8px; border-bottom: 1px solid #eee;")
-                a(href=`/catways/${catway._id}`)  Détail
+                a(href=`/catways/${catway._id}`) Détail
                 form(method="POST", action=`/catways/${catway._id}?_method=DELETE`, style="display:inline")
-                  button(type="submit", style="color:white; margin-left: 8px;")  Supprimer
+                  button(type="submit", style="color:white; margin-left: 8px;") Supprimer
     else
       p.message-info Aucune passerelle enregistrée.
 
@@ -53,5 +53,8 @@ block content
       } else if (section === 'list') {
         create.style.display = 'none';
         list.style.display = 'block';
+
+        // Forcer scroll tout en haut de la page
+        window.scrollTo({ top: 0, behavior: 'auto' });
       }
     }

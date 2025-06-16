@@ -88,10 +88,11 @@ form {
   flex-direction: column;
   gap: 10px;
   margin-top: 20px;
-  align-items: center;
+  align-items: stretch; /* ✅ correction ici */
 }
 
 form input[type="text"],
+form input[type="email"],
 form input[type="password"],
 form input[type="date"] {
   width: 80%;

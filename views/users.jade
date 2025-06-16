@@ -17,15 +17,11 @@ block content
               a(href=`/users/${user.email}`) Détails
               form(method="POST", action=`/users/${user.email}?_method=DELETE`, style="display:inline; margin-left:10px;")
                 button(type="submit") Supprimer
- 
-   h2 Ajouter un utilisateur
-  form(method="POST", action="/users")
-    label(for="email") Email :
-    input(type="email", name="email", required)
-    br
-    label(for="password") Mot de passe :
-    input(type="password", name="password", required)
-    br
-    button(type="submit") Créer
 
- 
+  h2 Ajouter un utilisateur
+  form(method="POST", action="/users")
+    input.input-field(type="email", name="email", required, placeholder="Email")
+    br
+    input.input-field(type="password", name="password", required, placeholder="Mot de passe")
+    br
+    button(type="submit", class="blue-button") Créer

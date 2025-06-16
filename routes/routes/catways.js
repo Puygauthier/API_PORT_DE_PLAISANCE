@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-
-// Correction du chemin du modèle Catway
 const Catway = require('../../models/catway');
 
 // GET /catways
@@ -48,7 +46,22 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Monte les routes de réservation comme sous-ressource
+// GET /catways/list - Affiche la liste en 2 colonnes
+router.get('/list', async (req, res) => {
+  try {
+    const catways = await Catway.find();
+    const half = Math.ceil(catways.length / 2);
+    res.render('catwayList', {
+      title: 'Liste des Catways',
+      catways,
+      half
+    });
+  } catch (err) {
+    res.status(500).send("Erreur lors du chargement de la liste des catways.");
+  }
+});
+
+// Sous-routes réservations
 const reservationRoutes = require('./reservations');
 router.use('/:id/reservations', reservationRoutes);
 
