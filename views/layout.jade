@@ -1,21 +1,21 @@
 doctype html
 html
   head
-    title= title
+    title Port de Plaisance
     link(rel='stylesheet', href='/stylesheets/style.css')
+    // Ajout Font Awesome CDN
+    
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css')
   body
-    // Le fond d’écran et le voile sombre sont gérés dans le CSS avec body::before
-    // Pas besoin d'un <div class="overlay">
+    // ✅ Navbar plein écran (hors container)
+    nav.menu
+      ul
+        li: a(href='/') Accueil
+        li: a(href='/catways') Catways
+        li: a(href='/users') Utilisateurs
+        li: a(href='/reservation') Réservations
 
-    // Container principal centré, commun à toutes les pages
+    // ✅ Contenu centré reste inchangé
     div.container
-      // Barre de navigation
-      nav.menu
-        ul
-          li: a(href='/') Accueil
-          li: a(href='/catways') Catways
-          li: a(href='/users') Utilisateurs
-
-      // Contenu injecté par chaque page
       block content
 

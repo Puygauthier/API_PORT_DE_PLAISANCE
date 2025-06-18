@@ -1,4 +1,37 @@
-/* Base générale */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 30px 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+  text-align: left;
+  box-sizing: border-box;
+  position: relative;
+  overflow-x: auto;
+  z-index: 1;
+}
+
+.container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  z-index: -1;
+}
+
+.container table {
+  width: 100%;
+  max-width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  display: block;
+  overflow-x: auto;
+  box-sizing: border-box;
+}
+
 html, body {
   height: 100%;
   margin: 0;
@@ -7,51 +40,24 @@ html, body {
   background: url('/images/port.jpg') no-repeat center center fixed;
   background-size: cover;
   color: white;
+
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   position: relative;
 }
 
-/* Suppression du voile global sur le body */
-body::before {
-  display: none;
-}
-
-/* Conteneur principal avec voile interne et dimensions fixes */
-.container {
-  position: relative;
-  background-color: rgba(0, 0, 0, 0.2); /* voile sombre interne */
-  padding: 30px;
-  border-radius: 10px;
-  max-width: 500px;
-  width: 90%;
-  margin: 20px auto;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-  text-align: center;
-  box-sizing: border-box;
-  overflow: hidden;
-  z-index: 1;
-}
-
-/* Voile sombre interne via pseudo-élément */
-.container::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  z-index: -1;
-}
-
-/* NAVIGATION */
 nav.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
   background-color: #0077cc;
-  padding: 12px 0;
-  margin: -30px -30px 25px -30px;
-  width: calc(100% + 60px);
+  padding: 12px 15px;
   box-sizing: border-box;
-  border-radius: 10px 10px 0 0;
+  border-radius: 0;
+  margin: 0;
 }
 
 nav.menu ul {
@@ -77,18 +83,16 @@ nav.menu a:hover {
   color: #66ccff;
 }
 
-/* TITRES */
 h1 {
   margin-bottom: 20px;
 }
 
-/* FORMULAIRE */
 form {
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin-top: 20px;
-  align-items: stretch; /* ✅ correction ici */
+  align-items: stretch;
 }
 
 form input[type="text"],
@@ -102,6 +106,7 @@ form input[type="date"] {
   font-size: 16px;
   color: #0077cc;
   font-weight: bold;
+  margin-bottom: 10px;
 }
 
 form input::placeholder {
@@ -109,7 +114,6 @@ form input::placeholder {
   opacity: 1;
 }
 
-/* BOUTONS */
 button {
   padding: 10px 20px;
   background-color: #0077cc;
@@ -119,35 +123,46 @@ button {
   cursor: pointer;
   font-weight: bold;
   margin-top: 20px;
+  width: fit-content;
+  align-self: center;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
   background-color: #005fa3;
 }
 
-/* TABLEAU */
 table {
   width: 100%;
+  max-width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  display: block;
+  overflow-x: auto;
+  box-sizing: border-box;
 }
 
 th, td {
   padding: 8px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   text-align: left;
+  vertical-align: middle;
 }
 
 th {
-  background-color: rgba(0, 119, 204, 0.8);
+  background-color: #1e3a5f;
+  color: #d9e4f5;
   font-weight: 600;
 }
 
 tbody tr:hover {
-  background-color: rgba(0, 119, 204, 0.3);
+  background-color: rgba(30, 58, 95, 0.2);
 }
 
-/* LIENS */
+td {
+  color: #cbd6e8;
+}
+
 a {
   color: #add8e6;
   text-decoration: none;
@@ -157,14 +172,6 @@ a:hover {
   text-decoration: underline;
 }
 
-/* MESSAGES */
-.message-info {
-  color: #add8e6;
-  font-weight: bold;
-  margin-top: 20px;
-}
-
-/* Liens comme boutons */
 a.button {
   display: inline-block;
   padding: 10px 20px;
@@ -181,9 +188,8 @@ a.button:hover {
   background-color: #005fa3;
 }
 
-/* Boutons dans tableau réservations */
 table.table td form button {
-  background-color: #cc3300;
+  background-color: #27527a;
   padding: 5px 10px;
   font-weight: bold;
   border-radius: 4px;
@@ -194,5 +200,11 @@ table.table td form button {
 }
 
 table.table td form button:hover {
-  background-color: #a02a00;
+  background-color: #193550;
+}
+
+.message-info {
+  color: #add8e6;
+  font-weight: bold;
+  margin-top: 20px;
 }

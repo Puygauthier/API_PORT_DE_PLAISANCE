@@ -1,9 +1,9 @@
 const express = require('express');
-const bcrypt = require('bcrypt'); // <-- Ajout du module bcrypt
+const bcrypt = require('bcrypt');
 const router = express.Router();
 const User = require('../models/User');
 
-// Connexion (POST /login)
+// POST /login
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -14,7 +14,7 @@ router.post('/login', async (req, res) => {
       return res.status(401).render('login', { error: 'Email ou mot de passe incorrect' });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password); // vérification sécurisée
+    const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
       return res.status(401).render('login', { error: 'Email ou mot de passe incorrect' });
@@ -22,12 +22,15 @@ router.post('/login', async (req, res) => {
 
     req.session.user = {
       email: user.email,
-      role: user.role || 'standard' // tu peux ajouter un champ "role" si tu veux
+      role: user.role || 'standard'
     };
 
-    res.redirect('/users'); // ou autre page protégée
+    res.redirect('/users'); // page protégée après login
   } catch (error) {
     console.error(error);
     res.status(500).render('login', { error: 'Erreur interne du serveur' });
   }
 });
+
+module.exports = router;
+

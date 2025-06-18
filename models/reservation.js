@@ -6,7 +6,7 @@ const reservationSchema = new Schema({
   dateDebut: Date,
   dateFin: Date,
   catway: {
-    type: Number,
+    type: Schema.Types.ObjectId,  // <-- changer Number en ObjectId
     required: true,
     ref: 'Catway'
   }

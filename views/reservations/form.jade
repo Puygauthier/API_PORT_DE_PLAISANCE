@@ -1,0 +1,25 @@
+extends ../layout
+
+block content
+  h1= title
+
+  form(action=action, method=method)
+    input(type='hidden', name='catwayId', value=catwayId)
+
+    div
+      label(for='client') Nom du client :
+      input#client(type='text', name='client', required, value=reservation.client)
+
+    div
+      label(for='dateDebut') Date de début :
+      input#dateDebut(type='date', name='dateDebut', required, value=reservation.dateDebut ? reservation.dateDebut.toISOString().split('T')[0] : '')
+
+    div
+      label(for='dateFin') Date de fin :
+      input#dateFin(type='date', name='dateFin', required, value=reservation.dateFin ? reservation.dateFin.toISOString().split('T')[0] : '')
+
+    div(style='margin-top: 15px;')
+      button(type='submit') Enregistrer
+
+  div(style='margin-top: 15px;')
+    a(href='/reservation?catwayId=' + catwayId) ← Retour à la liste

@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const path = require('path');
-const fs = require('fs');
 const bcrypt = require('bcrypt');
 const { MongoClient } = require('mongodb');
 
@@ -15,12 +13,12 @@ async function connectDB() {
   return client.db('API_PORT_DE_PLAISANCE');
 }
 
-/* GET home page */
+// GET home page
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Accueil - Port de Plaisance' });
 });
 
-/* POST login form */
+// POST login form
 router.post('/login', async function(req, res, next) {
   const { email, password } = req.body;
 
@@ -54,7 +52,7 @@ router.post('/login', async function(req, res, next) {
   }
 });
 
-/* GET dashboard */
+// GET dashboard
 router.get('/dashboard', async function(req, res, next) {
   if (!req.session.user) {
     return res.redirect('/');
@@ -66,7 +64,7 @@ router.get('/dashboard', async function(req, res, next) {
   try {
     const db = await connectDB();
     const now = new Date();
-    // On récupère les réservations en cours dans la base
+    // Récupère réservations en cours
     const allReservations = await db.collection('reservations').find({ dateFin: { $gte: now } }).toArray();
 
     res.render('tableau-de-bord', {
@@ -80,7 +78,7 @@ router.get('/dashboard', async function(req, res, next) {
   }
 });
 
-/* GET logout */
+// GET logout
 router.get('/logout', function(req, res, next) {
   if (req.session) {
     req.session.destroy(function(err) {

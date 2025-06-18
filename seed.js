@@ -9,7 +9,7 @@ async function connectDB() {
   if (!client.topology?.isConnected()) {
     await client.connect();
   }
-  return client.db('port'); // Le nom de ta base, ici "port"
+  return client.db('port');
 }
 
 async function seed() {
@@ -20,25 +20,45 @@ async function seed() {
     const catwaysData = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'catways.json')));
     const reservationsData = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'reservations.json')));
 
-    // Préparer catways avec la clé 'numero'
-    const catways = catwaysData.map(catway => ({
-      numero: catway.catwayNumber,
-      catwayType: catway.catwayType,
-      catwayState: catway.catwayState
-    }));
-
-    // Vider les collections
+    // Nettoyer les collections
     await db.collection('catways').deleteMany({});
     await db.collection('reservations').deleteMany({});
 
-    // Insérer les données
-    await db.collection('catways').insertMany(catways);
-    await db.collection('reservations').insertMany(reservationsData);
+    // Insérer les catways avec clé 'numero'
+    const catways = catwaysData.map(c => ({
+      numero: c.catwayNumber,
+      catwayType: c.catwayType,
+      catwayState: c.catwayState
+    }));
+    const result = await db.collection('catways').insertMany(catways);
 
-    console.log('Seed terminé : collections catways et reservations mises à jour.');
+    // Créer une map { numero => _id }
+    const catwayMap = {};
+    Object.entries(result.insertedIds).forEach(([index, id]) => {
+      const numero = catwaysData[index].catwayNumber;
+      catwayMap[numero] = id;
+    });
+
+    // Adapter les réservations
+    const adaptedReservations = reservationsData.map(r => {
+      const catwayId = catwayMap[r.catwayNumber];
+      if (!catwayId) return null; // ignore si pas de catway trouvé
+      return {
+        catway: catwayId,
+        client: r.clientName,
+        boatName: r.boatName,
+        dateDebut: new Date(r.startDate),
+        dateFin: new Date(r.endDate)
+      };
+    }).filter(Boolean); // Supprime les null
+
+    // Insérer les réservations transformées
+    await db.collection('reservations').insertMany(adaptedReservations);
+
+    console.log('✅ Seed terminé : catways et reservations insérés correctement.');
     process.exit(0);
   } catch (err) {
-    console.error('Erreur lors du seed:', err);
+    console.error('❌ Erreur lors du seed:', err);
     process.exit(1);
   }
 }

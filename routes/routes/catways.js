@@ -61,7 +61,7 @@ router.get('/list', async (req, res) => {
   }
 });
 
-// Sous-routes réservations
+// Sous-routes réservations (imbriquées)
 const reservationRoutes = require('./reservations');
 router.use('/:id/reservations', reservationRoutes);
 

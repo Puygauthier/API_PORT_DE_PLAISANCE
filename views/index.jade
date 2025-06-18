@@ -1,20 +1,15 @@
-extends layout
+extends layoutAccueil
 
 block content
-  h1= title
+  h1 Bienvenue sur l'API du Port de Plaisance
   if error
     p(style="color:red") #{error}
 
-  form(method="POST", action="/login")
-    div
-      label(for="email") Email :
-      input(type="email", name="email", id="email", required)
-    div
-      label(for="password") Mot de passe :
-      input(type="password", name="password", id="password", required)
-    div
-      button(type="submit") Se connecter
+  form(action="/login", method="POST")
+    input(type="text", id="username", name="username", placeholder="Nom d'utilisateur", required)
+    input(type="text", id="email", name="email", placeholder="Adresse email", required)
+    input(type="password", id="password", name="password", placeholder="Mot de passe", required)
+    button(type="submit") Connexion
 
-  p
-    | Pas encore de compte ? Contactez l'administrateur.
-
+  // Lien vers la documentation avec espacement
+  a(href="/docs", style="margin-top: 20px; display: inline-block;") Accéder à la documentation de l'API
