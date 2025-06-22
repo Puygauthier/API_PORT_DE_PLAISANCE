@@ -1,3 +1,5 @@
+require('dotenv').config(); // Charger les variables d'environnement en premier
+
 const app = require('./app'); // <-- Correction ici
 const mongoose = require('mongoose');
 const http = require('http');

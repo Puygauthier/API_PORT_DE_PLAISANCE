@@ -8,7 +8,9 @@ block content
     input#catwayId(type='text', name='catwayId', placeholder='Entrez un numéro de catway', value=(catwayId || ''))
     button(type='submit') Chercher
 
-  a(href='/reservation/catways/' + (catwayId || '') + '/reservations/new') Ajouter une réservation
+  form(action='/reservation/catways/' + (catwayId || '') + '/reservations/new', method='GET', style='margin-bottom: 25px;')
+    button(type='submit' style='padding: 10px 15px; background-color: #005bac; color: white; border: none; border-radius: 5px; cursor: pointer;')
+      | Ajouter une réservation
 
   if reservations.length
     table
@@ -35,4 +37,4 @@ block content
               else
                 | Catway introuvable
   else
-    p(style='margin-top: 40px; font-style: italic;') Aucune réservation trouvée.
+    p(style='margin-top: 40px; font-weight: bold; font-size: 1.5rem; text-decoration: underline;') Aucune réservation trouvée.

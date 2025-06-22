@@ -3,19 +3,15 @@ html
   head
     title Port de Plaisance
     link(rel='stylesheet', href='/stylesheets/style.css')
-    // Ajout Font Awesome CDN
-    
     link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css')
   body
-    // ✅ Navbar plein écran (hors container)
     nav.menu
       ul
         li: a(href='/') Accueil
         li: a(href='/catways') Catways
-        li: a(href='/users') Utilisateurs
+        li: a(href='/users/view') Utilisateurs
         li: a(href='/reservation') Réservations
 
-    // ✅ Contenu centré reste inchangé
-    div.container
-      block content
-
+    div.page-content
+      div.container
+        block content
